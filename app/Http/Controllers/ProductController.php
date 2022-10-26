@@ -18,6 +18,14 @@ class ProductController extends Controller
     public function index()
     {
 
+        
+        if (request()->ajax()) {
+
+            $products = Product::with(['category'])->select('products.*');
+
+            return DataTables::of($products)
+                ->make(true);
+        }
         return view('products.index');
     }
 

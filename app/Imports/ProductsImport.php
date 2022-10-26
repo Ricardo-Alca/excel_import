@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\Category as ModelsCategory;
 use App\Models\Product;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
@@ -11,6 +12,12 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class ProductsImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading
 
 {
+    private $categories;
+
+    public function __construct()
+    {
+        $this->categories = ModelsCategory::pluck('id', 'name');
+    }
     /**
     * @param array $row
     *
@@ -23,8 +30,7 @@ class ProductsImport implements ToModel, WithHeadingRow, WithBatchInserts, WithC
             'description' => $row['descripcion'],
             'price' => $row['precio'],
             'quantity_left' => $row['en_inventario'],
-            'category_id' => 1,
-
+            'category_id' => $this->categories[$row['categoria']]
         ]);
     }
 

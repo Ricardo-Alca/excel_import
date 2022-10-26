@@ -15,7 +15,7 @@
                         {{ session('success') }}
                     </div>
                     @endif
-                    <table class="table table-bordered table-striped products_table" style="width: 100%;">
+                    <table id="example" class="table table-bordered table-striped products_table" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th scope="col">Producto</th>
@@ -25,7 +25,17 @@
                                 <th scope="col">Categoria</th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+                        @foreach( $products as $product)
+                        <tr>
+                            <td>{{ $product->name }}</td>
+                            <td>{{ $product->description }}</td>
+                            <td>{{ $product->price }}</td>
+                            <td>{{ $product->quantity_left }}</td>
+                            <td>{{ $product->category_id }}</td>
+                        </tr>
+                        @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -67,4 +77,5 @@
         })
     })
 </script>
+
 @endsection

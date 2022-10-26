@@ -86,5 +86,8 @@
             @yield('content')
         </main>
     </div>
+     <!-- Mandamos llamar a los valores de script Inicio -->
+ @include ('scripHerramientas')
+    <!-- Mandamos llamar a los valores de script Fin -->
 </body>
 </html>

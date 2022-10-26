@@ -6,7 +6,7 @@ use App\Imports\ProductsImport;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -19,14 +19,14 @@ class ProductController extends Controller
     {
 
         
-        if (request()->ajax()) {
+        // if (request()->ajax()) {
 
-            $products = Product::with(['category'])->select('products.*');
-
-            return DataTables::of($products)
-                ->make(true);
-        }
-        return view('products.index');
+        //     //$products = Product::with(['category'])->select('products.*');
+        //     $datos['products']=Product::paginate(100);
+        // }
+        // return view('products.index',compact('products'));     
+        $datos = DB::table('products')->get();
+        return view('products.index', ['products' => $datos]);
     }
 
     /**

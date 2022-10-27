@@ -8,8 +8,9 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ProductsImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading
+class ProductsImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading, WithValidation
 
 {
     private $categories;
@@ -43,4 +44,24 @@ class ProductsImport implements ToModel, WithHeadingRow, WithBatchInserts, WithC
     {
         return 4000;
     }
+
+    public function rules(): array
+    {
+        return [
+            '*.en_inventario' => [
+                'integer'
+            ],
+            '*.en_inventario' => [
+                'numeric',
+                'required'
+            ]
+        ];
+    }
+
+    public function customValidationMessages()
+        {
+            return [
+                'numeric' => 'error al :attribute.',
+            ];
+        }
 }
